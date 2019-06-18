@@ -1,6 +1,7 @@
 #!/bin/bash
 # Set the frequency
-# Usage: to set the frequency to 600MHz: sudo bash ./set_freq.sh 600000
+# Usage: to set the frequency to 600MHz: 
+# sudo bash ./set_freq.sh 600000
 freq=$1
 
 # set userspace governor
