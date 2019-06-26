@@ -2,9 +2,17 @@
 
 This repo contains some useful scripts on RPi, including performance monitoring, setting and how to use bluetooth as well as Wi-Fi on RPi. 
 
+## List of Content
+
+[CPU Frequency](#CPU-Frequency)
+
+[CPU Uitlization](#CPU-Uitlization)
+
+
+
 ## Performance Monitoring and Setting
 
-As a powerful system running Linux-like OS, RPi is different from other micro-controller platforms running RTOS. The performance-related operations on RPi do not require reading low-level code or setting register values. Instead, **scripts reading/setting certain files (everything on Linux is a file!) and some helpful tools (e.g. perf, wondershaper) will be enough!**
+Different from other micro-controller platforms that require reading low-level code or setting register values to access performance values, on RPi, **scripts reading/setting certain files** (everything on Linux is a file!) and some **helpful tools (e.g. perf, wondershaper)** will be enough!
 
 If you are interested in working with the following performance metrics on Linux, this is the right place for you!
 
@@ -80,6 +88,38 @@ which prints the cycle usage break-down in each CPU core. All the script needs t
 
 ### CPU Temperature
 
+* A simple command can be used to get CPU temperature in millidegrees Celsius, on Linux-based system:
+
+  ```sh
+  cat /sys/class/thermal/thermal_zone0/temp
+  ```
+
+  This is the kernel-based interfaces for thermal zone devices (sensors) and thermal cooling devices (fan, processor...), being part of the thermal sysfs driver. The following command displays which the temperation-zone matching: 
+
+  ```sh
+  $ paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+  ```
+
+  For more information, check the [kernel documentation](https://www.kernel.org/doc/Documentation/thermal/sysfs-api.txt).
+
+* On RPi, the [vcgencmd](https://elinux.org/RPI_vcgencmd_usage) tool can be used to obtain the core temperature of BCM2835 SoC (This is what they said in their doc, but no idea on the specific location of the sensor, CPU?Or GPU?) Use the following command to get CPU temperature:
+
+  ```sh
+  /opt/vc/bin/vcgencmd measure_temp
+  ```
+
+  To get only the temperature value in Celsius:
+
+  ```sh
+  vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'
+  ```
+
+I combine those two commands into one script `get_temp.sh`, which is adapted from [here](https://www.cyberciti.biz/faq/linux-find-out-raspberry-pi-gpu-and-arm-cpu-temperature-command/). To use it:
+
+```sh
+bash get_temp.sh
+```
+
 ### Performance Counters
 
 I use the `perf stat` tool that is built in Linux to monitor performance counter values. The events can be monitored include instruction counts, cache misses, etc. For more information, refer to the [manual page](http://man7.org/linux/man-pages/man1/perf-stat.1.html) of `perf stat`.
@@ -106,7 +146,7 @@ To clear all the bandwidth settings:
 sudo bash reset_bw.sh
 ```
 
-Note that you may have to **change the path** to your wondershaper tool inside the scripts.
+Note that you may have to *change the path* to your wondershaper tool inside the scripts.
 
 ## Bluetooth on RPi
 
@@ -133,9 +173,7 @@ The Bluetooth on RPi is a little tricky.
    sudo bash cut_bluetooth.sh
    ```
 
-   
-
-2. There are some command-line tools to use the Bluetooth. [Bluetoothctl](http://www.linux-magazine.com/Issues/2017/197/Command-Line-bluetoothctl) is a very convenient built-in tool for using Bluetooth on Linux. With simple commands, you can scan, pair and connect to another Bluetooth device. Pay attention to the different between "pair" and "connect" - some devices need the 6-digit code match step which is completed in "connect" rather than "pair".
+2. There are some command-line tools to use the Bluetooth. [Bluetoothctl](http://www.linux-magazine.com/Issues/2017/197/Command-Line-bluetoothctl) is a very convenient built-in tool for using Bluetooth on Linux. With simple commands, you can scan, pair and connect to another Bluetooth device. Pay attention to the difference between "pair" and "connect" - some devices need the 6-digit code match step which is completed in "connect" rather than "pair".
 
 3. For Python API on RPi,
 
@@ -153,7 +191,7 @@ The Bluetooth on RPi is a little tricky.
 
 ## Wi-Fi on RPi
 
-Wi-Fi is the most commonly used part on RPi, thus I won't explain much. This part acts as a cheat sheet, a place to look at when encountering Wi-Fi setting problems in the future.
+Wi-Fi is the most commonly used part on RPi, thus I won't explain much. This part acts as a cheat sheet, a place to look for when encountering Wi-Fi setting problems in the future.
 
 In the `wifi` folder, there are 6 available code files:
 
