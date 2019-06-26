@@ -181,7 +181,7 @@ The Bluetooth on RPi is a little tricky.
    sudo bash cut_bluetooth.sh
    ```
 
-2. There are some command-line tools to use the Bluetooth. [Bluetoothctl](http://www.linux-magazine.com/Issues/2017/197/Command-Line-bluetoothctl) is a very convenient built-in tool for using Bluetooth on Linux. With simple commands, you can scan, pair and connect to another Bluetooth device. Pay attention to the difference between "pair" and "connect" - some devices need the 6-digit code match step which is completed in "connect" rather than "pair".
+2. There are some command-line tools to use the Bluetooth. [Bluetoothctl](http://www.linux-magazine.com/Issues/2017/197/Command-Line-bluetoothctl) is a very convenient built-in tool for using Bluetooth on Linux. With simple commands, you can **scan, pair and connect** to another Bluetooth device. Pay attention to the difference between "pair" and "connect" - some devices need the 6-digit code match step which is completed in "connect" rather than "pair".
 
 3. For Python API on RPi,
 
@@ -191,7 +191,7 @@ The Bluetooth on RPi is a little tricky.
 
    In this repo, I choose pybluez.
 
-4. The installation of pybluez may be annoying - there are a bunch of dependencies to be satisfied. [This tutorial] covesr the installation steps. And it has some additional requirements for the BLE mode. Unfortunately I was not able to find the link I refer to.
+4. The installation of pybluez may be annoying - there are a bunch of dependencies to be satisfied. [This tutorial](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation) covers the installation steps. And it has some additional requirements for the BLE mode. Unfortunately I was not able to find the link I refer to.
 
 5. For the scripts in this repo, I provide the whole process of **turning on Bluetooth, scanning, establishing client/server connection and sending packets to server** in `bluetooth/rfcomm_client.py`.
 
