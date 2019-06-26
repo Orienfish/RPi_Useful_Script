@@ -51,7 +51,7 @@ There are 3 scripts related to CPU frequency:
 
    If you are interested in certain cores, replace `*` with the core number.
 
-2. `set_freq.sh` sets the CPU frequency of all cores to your specified value. RPi could only be set to either 600MHz or 1200MHz. 
+2. `set_freq.sh` sets the CPU frequency of all cores to your specified value. RPi 3B could only be set to either 600MHz or 1200MHz. 
 
    To set the frequency to 600MHz (note the unit of the parameter is kHz):
 
