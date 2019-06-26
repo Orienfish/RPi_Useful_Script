@@ -8,7 +8,15 @@ This repo contains some useful scripts on RPi, including performance monitoring,
 
 [CPU Uitlization](#CPU-Uitlization)
 
+[CPU Temperature](#CPU-Temperature)
 
+[Performance Counters](#Performance-Counters)
+
+[Bandwidth](#Bandwidth)
+
+[Bluetooth on RPi](#Bluetooth-on-RPi)
+
+[Wi-Fi on RPI](#Wi-Fi-on-RPi)
 
 ## Performance Monitoring and Setting
 
