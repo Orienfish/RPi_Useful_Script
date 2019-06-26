@@ -1,6 +1,6 @@
 # Raspberry Pi Useful Scripts
 
-This repo contains some useful scripts on RPi, including performance monitoring, setting and how to use bluetooth as well as Wi-Fi on RPi. 
+This repo contains some useful scripts on RPi, including performance monitoring, setting and how to use bluetooth as well as Wi-Fi on RPi. In the last part, I also include a link to some RPi benchmarks in another repo.
 
 ## List of Content
 
@@ -16,7 +16,9 @@ This repo contains some useful scripts on RPi, including performance monitoring,
 
 [Bluetooth on RPi](#Bluetooth-on-RPi)
 
-[Wi-Fi on RPI](#Wi-Fi-on-RPi)
+[Wi-Fi on RPi](#Wi-Fi-on-RPi)
+
+[Benchmarks on RPi]()(#Benchmarks-on-RPi)
 
 ## Performance Monitoring and Setting
 
@@ -207,3 +209,7 @@ In the `wifi` folder, there are 6 available code files:
 * `cut_network.sh` cuts all the network connection on RPi.
 * `tcp_client.py` and `tcp_server.py` are the Python code to establish simple TCP connection.
 * `udp_client.py` and `udp_client.py` establish UDP connection.
+
+## Benchmarks on RPi
+
+In [another repo](https://github.com/Orienfish/IoTSim_Model), a CPU workload is constructed based on the work in [Roy Longbottom's Raspberry Pi, Pi 2 and Pi 3 Benchmarks](http://www.roylongbottom.org.uk/Raspberry Pi Benchmarks.htm), combining Dhrystone, Whetstone, Linpack, and their multi-thread versions.
