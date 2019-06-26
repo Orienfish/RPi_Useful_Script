@@ -11,7 +11,7 @@ If you are interested in working with the following performance metrics on Linux
 Note:
 
 * All the code in this repo are tested on RPi 3B. It may work on traditional Linux, or will work after some modifications.
-* There are a lot of system monitor software such as conky, psensor, etc. These may be the perfect tools in certain applications, but this repo focuses on the **simplest script-based methods where the data can be obtained remotely**.
+* There are a lot of system monitor software such as conky, psensor, etc. These may be the perfect tools in certain applications, but this repo focuses on the **simple script-based methods where the data can be printed out to terminal and obtained remotely**.
 
 ### CPU Frequency
 
@@ -82,11 +82,82 @@ which prints the cycle usage break-down in each CPU core. All the script needs t
 
 ### Performance Counters
 
-We use the [perf stat](http://man7.org/linux/man-pages/man1/perf-stat.1.html) tool that is built in Linux to monitor performance counter values. The events can be monitored include instruction counts, cache misses, etc. For more information, refer to the [manual page](http://man7.org/linux/man-pages/man1/perf-stat.1.html) of `perf stat`.
+I use the `perf stat` tool that is built in Linux to monitor performance counter values. The events can be monitored include instruction counts, cache misses, etc. For more information, refer to the [manual page](http://man7.org/linux/man-pages/man1/perf-stat.1.html) of `perf stat`.
+
+In the `perf_script.sh` script, I simply use the following commands:
+
+```sh
+sudo perf stat -a -I 200 -x, -e instructions,cache-misses,L1-dcache-loads,L1-dcache-stores,branch-instructions,branch-misses,cache-references,cpu-cycles,r110,r13C,r1A2,r1C2 sleep infinity 2>&1
+```
 
 ### Bandwidth
 
+The [wondershaper](https://github.com/magnific0/wondershaper) is a magic tool that can limit the bandwidth of any network adapters through commands. Two scripts based on wondershaper is included in this repo:
+
+To set the Wi-Fi bandwidth to 100kbps, use:
+
+```sh
+sudo bash set_bw.sh 100
+```
+
+To clear all the bandwidth settings:
+
+```sh
+sudo bash reset_bw.sh
+```
+
+Note that you may have to **change the path** to your wondershaper tool inside the scripts.
+
 ## Bluetooth on RPi
+
+The Bluetooth on RPi is a little tricky.
+
+1. By default, RPi turns off the Bluetooth. You may want to use the following commands, which is in the `bluetooth/wake_bluetooth.sh` script:
+
+   ```sh
+   sudo rfkill unblock bluetooth 
+   sudo hciconfig hci0 up
+   ```
+
+   To check the status of the Bluetooth, you can check the Bluetooth icon at you up-right corner of the screen (if you connect a screen), or you can try:
+
+   ```sh
+   hciconfig
+   ```
+
+   to see whether the state is UP or DOWN.
+
+   Reversing the above commands, `cut_bluetooth.sh` turns off Bluetooth. To use it:
+
+   ```sh
+   sudo bash cut_bluetooth.sh
+   ```
+
+   
+
+2. There are some command-line tools to use the Bluetooth. [Bluetoothctl](http://www.linux-magazine.com/Issues/2017/197/Command-Line-bluetoothctl) is a very convenient built-in tool for using Bluetooth on Linux. With simple commands, you can scan, pair and connect to another Bluetooth device. Pay attention to the different between "pair" and "connect" - some devices need the 6-digit code match step which is completed in "connect" rather than "pair".
+
+3. For Python API on RPi,
+
+   * [Bluetooth Comm API](https://bluedot.readthedocs.io/en/latest/btcommapi.html) is a well-wrapped API, with which you can ignore all the scanning and pairing details, treating the Bluetooth as a client/server model. 
+   * [pybluez](https://github.com/pybluez/pybluez) includes more fine-grained control, such as scanning and connecting. It does not distinguish pair and connect - it wraps the connection part into a client/server model.
+   * [bluetool](https://pypi.org/project/bluetool/) is a Python API for Bluetooth D-Bus calls on Linux. It has modes of scanning, pairing and connecting, while sending and receiving packets are excluded. As far as I know, its current version (0.2.3) does not support RPi.
+
+   In this repo, I choose pybluez.
+
+4. The installation of pybluez may be annoying - there are a bunch of dependencies to be satisfied. [This tutorial] covesr the installation steps. And it has some additional requirements for the BLE mode. Unfortunately I was not able to find the link I refer to.
+
+5. For the scripts in this repo, I provide the whole process of **turning on Bluetooth, scanning, establishing client/server connection and sending packets to server** in `bluetooth/rfcomm_client.py`.
+
+   Another script `bluetooth/rfcomm_server.py` is running on the other Bluetooth device to receive packets.
 
 ## Wi-Fi on RPi
 
+Wi-Fi is the most commonly used part on RPi, thus I won't explain much. This part acts as a cheat sheet, a place to look at when encountering Wi-Fi setting problems in the future.
+
+In the `wifi` folder, there are 6 available code files:
+
+* `wake_network.sh` turns on wlan0 on RPi.
+* `cut_network.sh` cuts all the network connection on RPi.
+* `tcp_client.py` and `tcp_server.py` are the Python code to establish simple TCP connection.
+* `udp_client.py` and `udp_client.py` establish UDP connection.
