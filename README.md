@@ -212,4 +212,4 @@ In the `wifi` folder, there are 6 available code files:
 
 ## Benchmarks on RPi
 
-In [another repo](https://github.com/Orienfish/IoTSim_Model), a CPU workload is constructed based on the work in [Roy Longbottom's Raspberry Pi, Pi 2 and Pi 3 Benchmarks](http://www.roylongbottom.org.uk/Raspberry Pi Benchmarks.htm), combining Dhrystone, Whetstone, Linpack, and their multi-thread versions.
+In [another repo](https://github.com/Orienfish/IoTSim_Model), a CPU workload is constructed based on the work in [Roy Longbottom's Raspberry Pi, Pi 2 and Pi 3 Benchmarks](http://www.roylongbottom.org.uk/Raspberry%20Pi%20Benchmarks.htm), combining Dhrystone, Whetstone, Linpack, and their multi-thread versions.
