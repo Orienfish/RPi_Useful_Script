@@ -18,7 +18,7 @@ This repo contains some useful scripts on RPi, including performance monitoring,
 
 [Wi-Fi on RPi](#Wi-Fi-on-RPi)
 
-[Benchmarks on RPi]()(#Benchmarks-on-RPi)
+[Benchmarks on RPi](#Benchmarks-on-RPi)
 
 ## Performance Monitoring and Setting
 
