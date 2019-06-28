@@ -107,7 +107,7 @@ which prints the cycle usage break-down in each CPU core. All the script needs t
   This is the kernel-based interfaces for thermal zone devices (sensors) and thermal cooling devices (fan, processor...), being part of the thermal sysfs driver. The following command displays which the temperation-zone matching: 
 
   ```sh
-  $ paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+  paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
   ```
 
   For more information, check the [kernel documentation](https://www.kernel.org/doc/Documentation/thermal/sysfs-api.txt).
